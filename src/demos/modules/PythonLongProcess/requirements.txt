@@ -1,0 +1,5 @@
+#! Python3.9
+
+CodeProject-AI-SDK          # Installing the CodeProject.AI SDK
+
+# last line empty

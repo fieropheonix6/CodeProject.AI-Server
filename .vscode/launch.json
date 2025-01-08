@@ -2,123 +2,647 @@
     "version": "0.2.0",
     "configurations": [
 
-        {
-            "name": "Build All",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build-all-win",
-            "linux": {
-                "preLaunchTask": "build-all-linux",
-            },
-            "osx": {
-                "preLaunchTask": "build-all-linux",
-            },
-            "program": "dotnet",
-            "args": [
-                "--version"
-            ],
-            "cwd": "${workspaceFolder}/src/API/Server/FrontEnd/",
-            "stopAtEntry": false,
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
-        },
+        // Server -------------------------------------------------------------
 
         {
+            "presentation": {
+                "group": "3 Server"
+            },
+            "name": "Build & Launch Server",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-server",
+            // "postDebugTask": "stop-all",
+            "program": "${workspaceFolder}/src/server/bin/Debug/net9.0/CodeProject.AI.Server",
+            "linux": {
+                // This is what you get from trusting ChatGPT
+                // "program": "${workspaceFolder}/src/server/bin/Debug/${env:dotNetTarget}/CodeProject.AI.Server.dll",
+                "program": "${workspaceFolder}/src/server/bin/Debug/net9.0/CodeProject.AI.Server.dll",
+
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/src/server/",
+            "stopAtEntry": false,
+            "requireExactSource": false,
+            /*
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\blistening on port: (\\d+)",
+                "uriFormat": "http://localhost:%s/swagger"
+            },
+            */
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DOTNET_NOLOGO": "true"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "presentation": {
+                "group": "3 Server"
+            },
+
+            "name": "Build Server Debug",
+
+            "type": "python", 
+            "code": "#",  // dummy command
+            "console": "internalConsole",
+            "request": "launch",
+            "preLaunchTask": "build-server",
+            "cwd": "${workspaceFolder}/src/server/",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "presentation": {
+                "group": "3 Server"
+            },
+
+            "name": "Build Server Release",
+
+            "type": "python", 
+            "code": "#",  // dummy command
+            "console": "internalConsole",
+            "request": "launch",
+            "preLaunchTask": "build-server-release",
+            "cwd": "${workspaceFolder}/src/server/",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Production"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        // Build  --------------------------------------------------------------
+
+        {
+            "presentation": {
+                "group": "1 Build"
+            },
+            "name": "Build All & Launch Server",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-all",
+            // "postDebugTask": "stop-all",
+            "program": "${workspaceFolder}/src/server/bin/Debug/net9.0/CodeProject.AI.Server",
+            "linux": {
+                "program": "${workspaceFolder}/src/server/bin/Debug/net9.0/CodeProject.AI.Server.dll",
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/src/server/",
+            "stopAtEntry": false,
+            "requireExactSource": false,
+            /*
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\blistening on port: (\\d+)",
+                "uriFormat": "http://localhost:%s/swagger"
+            },
+            */
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DOTNET_NOLOGO": "true"
+            },
+            "envFile": "${workspaceFolder}/.env"
+
+            // "logging": {
+            //     "engineLogging": false,
+            //     "moduleLoad": false,
+            //     "exceptions": false,
+            //     "browserStdOut": false
+            // }
+        },        
+        {
+            "presentation": {
+                "group": "1 Build"
+            },
+            "name": "Build All",
+
+            "type": "python", 
+            "code": "#",  // dummy command
+            "console": "internalConsole",
+            "request": "launch",
+            "preLaunchTask": "build-all",
+            "cwd": "${workspaceFolder}/src/server/",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        // Launch -------------------------------------------------------------
+        
+        {
+            "presentation": {
+                "group": "4 Launch",
+                "order": 1
+            },
             "name": "Launch Server",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build-all-win",
+            "program": "${workspaceFolder}/src/server/bin/Debug/net9.0/CodeProject.AI.Server",
             "linux": {
-                "preLaunchTask": "build-all-linux",
+                "program": "${workspaceFolder}/src/server/bin/Debug/net9.0/CodeProject.AI.Server.dll",
             },
-            "osx": {
-                "preLaunchTask": "build-all-linux",
-            },
-            "program": "${workspaceFolder}/src/API/Server/FrontEnd/bin/Debug/net6.0/CodeProject.AI.Server",
             "args": [],
-            "cwd": "${workspaceFolder}/src/API/Server/FrontEnd/",
+            "cwd": "${workspaceFolder}/src/server/",
             "stopAtEntry": false,
+            "requireExactSource": false,
+            /*
             "serverReadyAction": {
                 "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "pattern": "\\blistening on port: (\\d+)",
                 "uriFormat": "http://localhost:%s/swagger"
             },
-
+            */
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "RUNNING_IN_VSCODE": "true"
-            }
-            /*
-            "logging": {
-                "engineLogging": false,
-                "moduleLoad": false,
-                "exceptions": false,
-                "browserStdOut": false
-            }
-            */
+                "DOTNET_NOLOGO": "true"
+            },
+            "envFile": "${workspaceFolder}/.env"
+
+            // "logging": {
+            //    "engineLogging": false,
+            //    "moduleLoad": false,
+            //    "exceptions": false,
+            //    "browserStdOut": false
+            //}
+        },
+        {
+            "presentation": {
+                "group": "4 Launch",
+                "order": 100
+            },
+            "name": "Stop all Processes",
+            "type": "python", 
+            "code": "#",  // dummy command
+            "console": "internalConsole",
+            "request": "launch",
+            "preLaunchTask": "stop-all"
         },
 
         {
-            "name": "Launch Server & Modules separately",
+            "presentation": {
+                "group": "4 Launch",
+                "order": 2
+            },
+            "name": "Launch Server without Modules",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "pre-launch-server-debug",
-            "program": "${workspaceFolder}/src/API/Server/FrontEnd/bin/Debug/net6.0/CodeProject.AI.Server",
+            "preLaunchTask": "build-server",
+            "program": "${workspaceFolder}/src/server/bin/Debug/net9.0/CodeProject.AI.Server.exe",
+            "linux": {
+                "program": "${workspaceFolder}/src/server/bin/Debug/net9.0/CodeProject.AI.Server.dll",
+            },
             "args": [
-                "--LaunchAnalysisServices=false"
+                "--ModuleOptions:LaunchModules=false"
             ],
-            "cwd": "${workspaceFolder}/src/API/Server/FrontEnd/bin/Debug/net6.0/",
+            "cwd": "${workspaceFolder}/src/server/bin/Debug/net9.0/",
             "stopAtEntry": false,
-
+            /*
             "serverReadyAction": {
                 "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "pattern": "\\blistening on port: (\\d+)",
                 "uriFormat": "http://localhost:%s/swagger"
             },
-
+            */
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "RUNNING_IN_VSCODE": "true"
+                "DOTNET_NOLOGO": "true"
             },
+            "envFile": "${workspaceFolder}/.env",
 
             "logging": {
-                "engineLogging": false,
+                "diagnosticsLog": { "protocolMessages": false },
                 "moduleLoad": false,
                 "exceptions": true,
                 "browserStdOut": false
             },
         },
 
+
+        // Launch Individual Modules -------------------------------------------
+
         {
-            "name": "[Win] Explorer App",
+            "presentation": {
+                "group": "5 Launch Individual",
+                "hidden": false
+            },
+            "name": "Object Detect .NET",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "launch-server-win",
-            // "windows": { - VS Code linter gets all upset at this
-            "program": "${workspaceFolder}/demos/dotNet/CodeProject.AI.Explorer/bin/Debug/net5.0-windows/win-x64/CodeProject.AI.Demo.Explorer.exe",
-            // },
-            "args": [],
-            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "build-yolo-net",
+            "program": "${workspaceFolder}/modules/ObjectDetectionYOLOv5Net/bin/Debug/net9.0/ObjectDetectionYOLOv5Net.exe",
+            "linux": {
+                "program": "${workspaceFolder}/modules/ObjectDetectionYOLOv5Net/bin/Debug/net9.0/ObjectDetectionYOLOv5Net.dll",
+            },
+            // "args": [ "--selftest" ],
+            // "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/modules/ObjectDetectionYOLOv5Net", 
             "stopAtEntry": false,
             "console": "internalConsole",
-
+            "requireExactSource": false,
+            "justMyCode": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "RUNNING_IN_VSCODE": "true"
-            }
+                "CPAI_MODULE_QUEUENAME": "objectdetection_queue",
+                "DYLD_LIBRARY_PATH" : "/opt/homebrew/lib" // For macOS
+            },
+            "envFile": "${workspaceFolder}/.env"
         },
+
+        {
+            "presentation": {
+                "group": "5 Launch Individual",
+                "hidden": false
+            },
+            "name": "Object Detect YOLOv5 6.2",
+            "type": "debugpy",
+            "python": "${workspaceFolder}/runtimes/bin/windows/python37/venv/Scripts/python",
+            "windows": {
+                "python": "${workspaceFolder}/runtimes/bin/windows/python37/venv/Scripts/python"
+            },
+            "linux": {
+                "python": "${workspaceFolder}/runtimes/bin/ubuntu/python38/venv/bin/python",
+                // "python": "${workspaceFolder}/runtimes/bin/debian/python38/venv/bin/python",
+            },
+            "osx": {
+                "python": "${workspaceFolder}/runtimes/bin/macos/python38/venv/bin/python",
+            },
+            "request": "launch",
+            "program": "detect_adapter.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/modules/ObjectDetectionYOLOv5-6.2",
+            "justMyCode": false,
+            // "args": [ "--selftest" ],
+            "env": {
+                // "CPAI_LOG_VERBOSITY": "Loud",
+                "CPAI_PORT": "32168",
+                "CPAI_MODULE_QUEUENAME": "objectdetection_queue",
+                "CPAI_MODULE_PARALLELISM": "1",
+
+                "MODEL_SIZE": "Tiny"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        // Utilities -----------------------------------------------------------
+
+        {
+            "presentation": {
+                "group": "6 Utilities"
+            },
+
+            "name": "Build ParseJSON Debug",
+
+            "type": "python", 
+            "code": "#",  // dummy command
+            "console": "internalConsole",
+            "request": "launch",
+            "preLaunchTask": "build-parsejson",
+            "cwd": "${workspaceFolder}/utils/ParseJSON/",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        {
+            "presentation": {
+                "group": "6 Utilities"
+            },
+
+            "name": "Build ParseJSON Release",
+
+            "type": "python", 
+            "code": "#",  // dummy command
+            "console": "internalConsole",
+            "request": "launch",
+            "preLaunchTask": "build-parsejson-release",
+            "cwd": "${workspaceFolder}/utils/ParseJSON/",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        {
+            "presentation": {
+                "group": "6 Utilities",
+                "hidden": false
+            },
+            "name": "Run ParseJSON Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-parsejson",
+            "program": "${workspaceFolder}/utils/ParseJSON/bin/Debug/net9.0/ParseJSON",
+            "linux": {
+                "program": "${workspaceFolder}/utils/ParseJSON/bin/Debug/net9.0/ParseJSON.dll",
+            },
+            "args": [ "$.Modules.ALPR.Platforms", "test.json" ],
+            "cwd": "${workspaceFolder}/utils/ParseJSON/",
+            "stopAtEntry": false,
+            "requireExactSource": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        // disabled for now...--------------------------------------------------
 
         // See https://code.visualstudio.com/docs/editor/variables-reference#_settings-command-variables-and-input-variables
         // For variables that can be used
         {
-            "name": "Python: Current File",
+            "presentation": {
+                "group": "5 Launch Individual",
+                "hidden": true
+            },
+            "name": "Python: Attach via ProcessID",
             "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal",
-            "cwd": "${fileDirname}",
+            "request": "attach",
+            "processId": "${command:pickProcess}",
             "justMyCode": true
+        },
+
+        // Demo clients --------------------------------------------------------
+        
+        {
+            "presentation": {
+                "group": "9 Demo clients",
+                // "order": 90
+            },
+            "name": "Golang demo",
+            "type": "go", 
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/src/demos/clients/Go/object-detect.go",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/demos/clients/Go/",
+            "preLaunchTask": "build-demo-go",
+            "env": {
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        {
+            "presentation": {
+                "group": "9 Demo clients",
+                // "order": 90
+            },
+            "name": "Node.js Demo",
+            "type": "node",
+            "request": "launch",
+            "skipFiles": ["<node_internals>/**"],
+            "program": "${workspaceFolder}/src/demos/clients/Node/object-detect/app.js",
+            "preLaunchTask": "build-demo-node",
+            "cwd": "${workspaceFolder}/src/demos/clients/Node/object-detect/",
+            "outFiles": ["${workspaceFolder}/src/demos/clients/Node/object-detect/*.js"],
+            "env": {
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        {
+            "presentation": {
+                "group": "9 Demo clients",
+                // "order": 90
+            },
+            "name": "Rust Demo",
+            "type": "python", 
+            "code": "#",  // dummy command
+            "console": "internalConsole",
+            "request": "launch",
+            "program": "object-detect.exe",
+            "args": [ "run" ],
+            "cwd": "${workspaceFolder}/src/demos/clients/Rust/object-detect/target/debug",
+            "preLaunchTask": "build-demo-rust",
+            "stopOnEntry": false,
+            "env": {
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        /*
+        {
+            "presentation": {
+                "group": "9 Demo clients",
+                // "order": 90
+            },
+            "name": "[Win] Build Explorer App",
+
+            "type": "python", 
+            "code": "#",  // dummy command
+            "console": "internalConsole",
+            "request": "launch",
+            "preLaunchTask": "build-explorer",
+            "cwd": "${workspaceFolder}/src/demos/clients/Net/AiExplorer/",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+        */
+
+        {
+            "presentation": {
+                "group": "9 Demo clients",
+                // "order": 90
+            },
+            "name": "[Win] AI Explorer Demo",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-ai-explorer",
+            "windows": {
+                "program": "${workspaceFolder}/src/demos/clients/Net/AiExplorer/bin/Debug/net9.0-windows/AiExplorer.exe",
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        {
+            "presentation": {
+                "group": "9 Demo clients",
+                // "order": 90
+            },
+            "name": "JSON client Demo",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-json-client",
+            "program": "${workspaceFolder}/src/demos/clients/Net/JsonAPI/bin/Debug/net9.0/JsonAPI",
+            "linux": {
+                "program": "${workspaceFolder}/src/demos/clients/Net/JsonAPI/bin/Debug/net9.0/JsonAPI.dll",
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}/src/demos/clients/Net/JsonAPI/",
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        {
+            "presentation": {
+                "group": "9 Demo clients",
+                "hidden": false
+            },
+            "name": "Racoon detector",
+            "type": "debugpy",
+            "python": "${workspaceFolder}/runtimes/bin/windows/python38/venv/bin/python",
+            "windows": {
+                "python": "${workspaceFolder}/runtimes/bin/windows/python39/venv/Scripts/python.exe"
+            },
+            "linux": {
+                "python": "${workspaceFolder}/runtimes/bin/ubuntu/python38/venv/bin/python",
+                // "python": "${workspaceFolder}/runtimes/bin/debian/python38/venv/bin/python",
+            },
+            "osx": {
+                "python": "${workspaceFolder}/runtimes/bin/macos/python38/venv/bin/python",
+            },
+            "request": "launch",
+            "program": "racoon_detect.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/src/demos/clients/Python/ObjectDetect",
+            "justMyCode": false,
+            "env": {
+                // "CPAI_LOG_VERBOSITY": "Loud",
+                "CPAI_PORT": "32168"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        // DEMO MODULES --------------------------------------------------------
+
+        {
+            "presentation": {
+                "group": "99 Demos",
+                "Order": 1,
+            },
+
+            "name": "Python Simple Module",
+            "type": "debugpy",
+            "python": "${workspaceFolder}/runtimes/bin/windows/python39/venv/Scripts/python",
+            "windows": {
+                "python": "${workspaceFolder}/runtimes/bin/windows/python39/venv/Scripts/python"
+            },
+            "linux": {
+                "python": "${workspaceFolder}/runtimes/bin/ubuntu/python38/venv/bin/python",
+                // "python": "${workspaceFolder}/runtimes/bin/debian/python38/venv/bin/python",
+            },
+            "osx": {
+                "python": "${workspaceFolder}/runtimes/bin/macos/python38/venv/bin/python",
+            },
+            "request": "launch",
+            // "program": "detect.py",
+            "program": "detect_adapter.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/src/demos/modules/PythonSimple",
+            "justMyCode": false,
+            "args": [ "-i", "${workspaceFolder}\\src\\demos\\modules\\PythonSimple\\test\\home-office.jpg",
+                      "-a", "${workspaceFolder}\\src\\demos\\modules\\PythonSimple\\assets\\",
+                      "-t", "0.6"
+                    ],
+            "env": {
+                "CPAI_PORT": "32168",
+                "CPAI_MODULE_QUEUENAME": "objectdetection_queue",
+
+                "MODEL_SIZE": "Tiny"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "presentation": {
+                "group": "99 Demos"
+            },
+
+            "name": "Python Long Process Module",
+            "type": "debugpy",
+            "python": "${workspaceFolder}/runtimes/bin/windows/python39/venv/Scripts/python",
+            "windows": {
+                "python": "${workspaceFolder}/runtimes/bin/windows/python39/venv/Scripts/python"
+            },
+            "linux": {
+                "python": "${workspaceFolder}/runtimes/bin/ubuntu/python38/venv/bin/python",
+                // "python": "${workspaceFolder}/runtimes/bin/debian/python38/venv/bin/python",
+            },
+            "osx": {
+                "python": "${workspaceFolder}/runtimes/bin/macos/python38/venv/bin/python",
+            },
+            "request": "launch",
+            "program": "long_process_demo_adapter.py",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}/src/demos/modules/PythonLongProcess",
+            "justMyCode": false,
+            "args": [  ],
+            "env": {
+                "CPAI_PORT": "32168",
+                "CPAI_MODULE_PARALLELISM": "1",
+
+                "MODEL_SIZE": "Tiny"
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        {
+            "presentation": {
+                "group": "99 Demos",
+                "hidden": false
+            },
+            "name": ".NET Simple Module",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "demo_module_dotnetsimple",
+            "program": "${workspaceFolder}/src/demos/modules/DotNetSimple/bin/Debug/net9.0/DotNetSimple",
+            "linux": {
+                "program": "${workspaceFolder}/src/demos/modules/DotNetSimple/bin/Debug/net9.0/DotNetSimple.dll",
+            },
+            // "args": [ "--selftest" ],
+            // "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/src/demos/modules/DotNetSimple", 
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "requireExactSource": false,
+            "justMyCode": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DYLD_LIBRARY_PATH" : "/opt/homebrew/lib" // For macOS
+            },
+            "envFile": "${workspaceFolder}/.env"
+        },
+
+        {
+            "presentation": {
+                "group": "99 Demos",
+                "hidden": false
+            },
+            "name": ".NET Long Process Module",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-demo_module_dotnetlongprocess",
+            "program": "${workspaceFolder}/src/demos/modules/DotNetLongProcess/bin/Debug/net9.0/DotNetLongProcess",
+            "linux": {
+                "program": "${workspaceFolder}/src/demos/modules/DotNetLongProcess/bin/Debug/net9.0/DotNetLongProcess.dll",
+            },
+            // "args": [ "--selftest" ],
+            // "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/src/demos/modules/DotNetLongProcess", 
+            "stopAtEntry": false,
+            "console": "internalConsole",
+            "requireExactSource": false,
+            "justMyCode": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AiExplorer": {
+      "commandName": "Project",
+      "commandLineArgs": "--MODE=high"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "Modules": {
+
+    "ObjectDetectionYOLOv5Net": {
+      "LaunchSettings": {
+        "FilePath": "bin/ObjectDetectionYOLOv5Net.exe"
+      }
+    }
+  }
+}
